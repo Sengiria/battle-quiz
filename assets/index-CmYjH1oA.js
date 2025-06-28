@@ -61,7 +61,7 @@ Error generating stack: `+n.message+`
                     active:shadow-[inset_1px_1px_2px_rgba(0,0,0,0.4)]
                     active:translate-y-[2px]
                     ${c&&s.length>0&&"cursor-not-allowed"}
-`,children:o},o)})})]}),yT=({question:i,answers:s,onSelect:r,feedback:o,correctAnswer:c})=>Y.jsxs(Y.Fragment,{children:[Y.jsx("h2",{className:"text-lg sm:text-xl text-shadow-lg text-[#795649] font-bold text-center drop-shadow p-2 w-full h-20 mt-4",children:i}),Y.jsx("div",{className:"w-full flex flex-col items-center gap-3 p-6",children:s.map((d,h)=>{const m=(o==null?void 0:o.selected)===d,g=c===d,y=m&&!(o!=null&&o.correct);return Y.jsx("button",{onClick:()=>r(d),disabled:!!o,className:`px-4 py-2 w-full text-sm font-serif rounded border-2 transition-all duration-300 ease-in-out
+`,children:o},o)})})]}),yT=({question:i,answers:s,onSelect:r,feedback:o,correctAnswer:c})=>Y.jsxs(Y.Fragment,{children:[Y.jsx("h2",{className:"text-lg sm:text-xl text-shadow-lg text-[#795649] font-bold text-center drop-shadow p-2 w-full min-h-20 mt-4 break-words",children:i}),Y.jsx("div",{className:"w-full flex flex-col items-center gap-3 p-6",children:s.map((d,h)=>{const m=(o==null?void 0:o.selected)===d,g=c===d,y=m&&!(o!=null&&o.correct);return Y.jsx("button",{onClick:()=>r(d),disabled:!!o,className:`px-4 py-2 w-full text-sm font-serif rounded border-2 transition-all duration-300 ease-in-out
                 cursor-pointer
                 text-[#f4e5c3] border-[#c0a080]
                 shadow-[2px_2px_0px_#a67c52] 
