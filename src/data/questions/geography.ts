@@ -54,7 +54,7 @@ export const geographyQuestions: Question[] = [
     category: CATEGORY_GEOGRAPHY,
     question: 'Which country has the largest population?',
     answers: ['India', 'USA', 'China', 'Indonesia'],
-    correctAnswer: 'China',
+    correctAnswer: 'India',
   },
    {
     category: CATEGORY_GEOGRAPHY,
