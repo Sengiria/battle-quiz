@@ -1,12 +1,13 @@
 import type { ArmyProps } from "./types"
+const base = import.meta.env.BASE_URL;
 
 const Army = ({ health, maxHealth, showBoom = false }: ArmyProps) => {
   const armyImages = [
-    '/assets/army/army_5.png',
-    '/assets/army/army_4.png',
-    '/assets/army/army_3.png',
-    '/assets/army/army_2.png',
-    '/assets/army/army_1.png',
+  `${base}assets/army/army_5.png`,
+  `${base}assets/army/army_4.png`,
+  `${base}assets/army/army_3.png`,
+  `${base}assets/army/army_2.png`,
+  `${base}assets/army/army_1.png`,
   ]
   const totalStages = armyImages.length
   const clampedHealth = Math.max(0, Math.min(health, maxHealth)) // just in case
@@ -24,7 +25,7 @@ const Army = ({ health, maxHealth, showBoom = false }: ArmyProps) => {
       )}
       {showBoom && (
         <img
-          src="/assets/explosion.gif"
+          src={`${base}assets/explosion.gif`}
           alt="Boom"
           className="absolute w-[120px] h-[120px] bottom-[10%] mix-blend-lighten pointer-events-none"
         />

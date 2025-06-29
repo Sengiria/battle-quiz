@@ -13,6 +13,7 @@ import Army from './components/Army/Army'
 import Intro from './components/Intro/Intro'
 import GameEndScreen from './components/EndScreen/EndScreen'
 import DifficultySelector from './components/DifficultySelector/DifficultySelector'
+const base = import.meta.env.BASE_URL;
 
 const MAX_CASTLE_STAGE = 7
 
@@ -141,7 +142,7 @@ const Game = ({ isTest = false }: { isTest?: boolean }) => {
       {/* Background image */}
       <div className="absolute inset-0 z-0">
         <img
-          src="/assets/backgrounds/battlefield.png"
+          src={`${base}assets/backgrounds/battlefield.png`}
           alt="Battlefield"
           className="w-full h-full object-cover"
         />
