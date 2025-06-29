@@ -3,10 +3,9 @@ import type { QuestionsContentProps } from './types'
 const QuestionsContent = ({ question, answers, onSelect, feedback, correctAnswer }: QuestionsContentProps) => {
   return (
     <>
-      <h2 className="text-lg sm:text-xl text-shadow-lg text-[#795649] font-bold text-center drop-shadow p-2 w-full h-20 mt-4">
+      <h2 className="text-lg sm:text-xl text-shadow-lg text-[#795649] font-bold text-center drop-shadow p-2 w-full min-h-20 mt-4 break-words">
         {question}
       </h2>
-
       <div className="w-full flex flex-col items-center gap-3 p-6">
         {answers.map((answer, index) => {
           const isSelected = feedback?.selected === answer
