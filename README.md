@@ -1,54 +1,74 @@
-# React + TypeScript + Vite
+# Battle Quiz - Single Player
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+🎯 **Battle Quiz** is a dynamic single-player quiz game where knowledge is your weapon! Choose your difficulty, survive the questions, and defeat the castle with your intellect.
 
-Currently, two official plugins are available:
+[▶️ Play the game](https://sengiria.github.io/battle-quiz/)
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+---
 
-## Expanding the ESLint configuration
+## 🧠 About the Game
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+In this fantasy-themed quiz challenge, you must answer a series of questions across 4 difficulty levels:
 
-```js
-export default tseslint.config({
-  extends: [
-    // Remove ...tseslint.configs.recommended and replace with this
-    ...tseslint.configs.recommendedTypeChecked,
-    // Alternatively, use this for stricter rules
-    ...tseslint.configs.strictTypeChecked,
-    // Optionally, add this for stylistic rules
-    ...tseslint.configs.stylisticTypeChecked,
-  ],
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
-```
+- **Easy**
+- **Medium**
+- **Hard**
+- **Hardcore**
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+Each level determines:
+- How many questions you'll face.
+- How much HP (health points) you have to endure wrong answers.
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+Your goal? Outlast the questions and destroy the castle!
 
-export default tseslint.config({
-  plugins: {
-    // Add the react-x and react-dom plugins
-    'react-x': reactX,
-    'react-dom': reactDom,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended typescript rules
-    ...reactX.configs['recommended-typescript'].rules,
-    ...reactDom.configs.recommended.rules,
-  },
-})
-```
+---
+
+## 🛠️ Tech Stack
+
+- **React**
+- **TypeScript**
+- **Vite**
+- **Tailwind CSS**
+
+---
+
+## 🚀 Getting Started
+
+### Installation
+
+1. **Clone the repository**  
+  ```bash
+   git clone https://github.com/your-username/battle-quiz.git
+  ```
+2. **Install dependencies**  
+  ```bash
+   npm install
+  ```
+2. **Run the app locally**  
+  ```bash
+   npm run dev
+  ```
+
+## 🎮 How to Play
+   
+- Choose your difficulty on the start screen.
+- Select the categories you wish to include.
+- Read each question and select the correct answer.
+- Wrong answers cost you HP. Lose all HP and the game is over.
+- Answer correctly to damage the enemy castle.
+- Survive all questions to win!
+
+## 🏗️ Roadmap
+
+- Single player mode
+- Difficulty scaling (questions + HP)
+- Multiplayer mode (coming soon)
+- Sound effects and music (coming soon)
+- Leaderboard or high score tracking (coming soon)
+
+## 🎨 Assets & Credits
+Castle assets from CraftPix.net
+
+## 💬 Feedback
+If you have suggestions, found a bug, or just want to say hi — feel free to open an issue or contact me.
+
