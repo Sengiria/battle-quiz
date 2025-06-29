@@ -1,7 +1,7 @@
 import { render, screen, fireEvent } from '@testing-library/react'
-import Game from '../Game'
 import { DIFFICULTY_EASY } from '../constants/difficulties'
 import { CATEGORY_GEOGRAPHY } from '../constants/categories'
+import Game from '../components/Game/Game'
 
 describe('Game Flow', () => {
   it('starts with difficulty selection', () => {

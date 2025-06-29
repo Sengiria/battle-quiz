@@ -1,26 +1,23 @@
 import { useEffect, useState } from 'react'
-import { DIFFICULTY_EASY, DIFFICULTY_SETTINGS, type Difficulty } from './constants/difficulties'
-import CardWrapper from './components/CardWrapper/CardWrapper'
-import CategorySelector from './components/CategorySelector/CategorySelector'
-import QuestionContent from './components/QuestionsContent/QuestionsContent'
-import { getRandomQuestions } from './utils/getRandomQuestions'
-import { PHASE_CATEGORY, PHASE_DIFFICULTY, PHASE_GAME_OVER, PHASE_PLAY, PHASE_WIN, type GamePhase } from './constants/gamePhase'
-import { ALL_CATEGORIES, ALL_WITH_RANDOM, CATEGORY_RANDOM, type Category } from './constants/categories'
-import type { Question } from './constants/questions'
-import Header from './components/Header/Header'
-import Castle from './components/Castle/Castle'
-import Army from './components/Army/Army'
-import Intro from './components/Intro/Intro'
-import GameEndScreen from './components/EndScreen/EndScreen'
-import DifficultySelector from './components/DifficultySelector/DifficultySelector'
+import { DIFFICULTY_EASY, DIFFICULTY_SETTINGS, type Difficulty } from '../../constants/difficulties'
+import CardWrapper from '../../components/CardWrapper/CardWrapper'
+import CategorySelector from '../../components/CategorySelector/CategorySelector'
+import QuestionContent from '../../components/QuestionsContent/QuestionsContent'
+import { getRandomQuestions } from '../../utils/getRandomQuestions'
+import { PHASE_CATEGORY, PHASE_DIFFICULTY, PHASE_GAME_OVER, PHASE_PLAY, PHASE_WIN, type GamePhase } from '../../constants/gamePhase'
+import { ALL_CATEGORIES, ALL_WITH_RANDOM, CATEGORY_RANDOM, type Category } from '../../constants/categories'
+import type { Question } from '../../constants/questions'
+import Header from '../../components/Header/Header'
+import Castle from '../../components/Castle/Castle'
+import Army from '../../components/Army/Army'
+import Intro from '../../components/Intro/Intro'
+import GameEndScreen from '../../components/EndScreen/EndScreen'
+import DifficultySelector from '../../components/DifficultySelector/DifficultySelector'
+import { getCastleStage } from '../../utils/getCastleStage'
+import { CARD_MOUNT_DELAY, MAX_CASTLE_STAGE } from '../../constants/gameConfig'
+import { handleAnswerAnimation } from '../../utils/handleAnswer'
+import { useIntro } from '../../hooks/useIntro'
 const base = import.meta.env.BASE_URL;
-
-const MAX_CASTLE_STAGE = 7
-
-function getCastleStage(correctAnswers: number, total: number, maxStage: number) {
-  const ratio = correctAnswers / total
-  return Math.min(maxStage, Math.floor(ratio * (maxStage + 1)))
-}
 
 const Game = ({ isTest = false }: { isTest?: boolean }) => {
   const [phase, setPhase] = useState<GamePhase>(PHASE_DIFFICULTY)
@@ -36,23 +33,7 @@ const Game = ({ isTest = false }: { isTest?: boolean }) => {
   const [showCardWrapper, setShowCardWrapper] = useState(false)
   const [showDamageEffect, setShowDamageEffect] = useState(false)
   const [showArmyBoom, setShowArmyBoom] = useState(false)
-  const [showIntro, setShowIntro] = useState(true)
-  const [introVisible, setIntroVisible] = useState(true)
-
-  useEffect(() => {
-    if (isTest) {
-      setIntroVisible(false)
-      setShowIntro(false)
-      return
-    }
-    const timer = setTimeout(() => {
-      setIntroVisible(false) // start fade-out
-      setTimeout(() => setShowIntro(false), 1000) // remove from DOM after fade-out
-    }, 4500)
-
-    return () => clearTimeout(timer)
-  }, [isTest])
-
+  const { showIntro, introVisible } = useIntro(isTest);
 
   const handleCategoryChange = (category: Category | typeof CATEGORY_RANDOM) => {
     if (category === CATEGORY_RANDOM) {
@@ -75,52 +56,32 @@ const Game = ({ isTest = false }: { isTest?: boolean }) => {
   }
 
   const handleAnswer = (selected: string) => {
-    const current = questions[currentIndex]
-    const isCorrect = selected === current.correctAnswer
-    setFeedback({ selected, correct: isCorrect })
+    handleAnswerAnimation({
+      selected,
+      questions,
+      currentIndex,
+      health,
+      setFeedback,
+      setShowCardWrapper,
+      setShowDamageEffect,
+      setCorrectAnswers,
+      setShowArmyBoom,
+      setHealth,
+      setPhase,
+      setCurrentIndex,
+    });
+  };
 
-    // Step 1: Show feedback for a short time
-    setTimeout(() => {
-      setFeedback(undefined)
-      setShowCardWrapper(false)
-
-      if (isCorrect) {
-        setShowDamageEffect(true) // attack castle
-      } else {
-        setShowArmyBoom(true) // attack army
-      }
-
-      // Step 2: Wait for animation
-      setTimeout(() => {
-        if (isCorrect) {
-          setCorrectAnswers((prev) => prev + 1)
-          setShowDamageEffect(false)
-        } else {
-          const newHealth = health - 1
-          setHealth(newHealth)
-
-          setTimeout(() => {
-            setShowArmyBoom(false)
-          }, 1500)
-
-          if (newHealth <= 0) {
-            setPhase(PHASE_GAME_OVER)
-            return
-          }
-        }
-
-        // Step 3: Delay before showing the next question
-        setTimeout(() => {
-          if (currentIndex + 1 < questions.length) {
-            setCurrentIndex((i) => i + 1)
-            setShowCardWrapper(true)
-          } else {
-            setPhase(PHASE_WIN)
-          }
-        }, 1500)
-      }, 1500)
-    }, 1000)
-  }
+  const handleRestart = () => {
+  setPhase(PHASE_DIFFICULTY)
+  setQuestions([])
+  setSelectedCategories([])
+  setCurrentIndex(0)
+  setCorrectAnswers(0)
+  setHealth(hp)
+  setShowCardWrapper(false)
+  setTimeout(() => setShowCardWrapper(true), 400)
+}
 
   useEffect(() => {
     if (isTest) {
@@ -129,7 +90,7 @@ const Game = ({ isTest = false }: { isTest?: boolean }) => {
     }
     const delay = setTimeout(() => {
       setShowCardWrapper(true);
-    }, 4000);
+    }, CARD_MOUNT_DELAY);
 
     return () => clearTimeout(delay);
   }, []);
@@ -144,7 +105,7 @@ const Game = ({ isTest = false }: { isTest?: boolean }) => {
         <img
           src={`${base}assets/backgrounds/battlefield.png`}
           alt="Battlefield"
-          className="w-full h-full object-cover"
+          className="w-full h-full object-cover select-none"
         />
       </div>
 
@@ -231,8 +192,6 @@ const Game = ({ isTest = false }: { isTest?: boolean }) => {
               <h2 className="text-xl text-red-700 font-bold text-center w-full">Game Over! 😢</h2>
             )}
 
-
-
           </CardWrapper>
         )}
       </div>
@@ -240,16 +199,7 @@ const Game = ({ isTest = false }: { isTest?: boolean }) => {
       {(phase === PHASE_WIN || phase === PHASE_GAME_OVER) && (
         <GameEndScreen
           type={phase}
-          onRestart={() => {
-            setPhase(PHASE_DIFFICULTY)
-            setQuestions([])
-            setSelectedCategories([])
-            setCurrentIndex(0)
-            setCorrectAnswers(0)
-            setHealth(hp)
-            setShowCardWrapper(false)
-            setTimeout(() => setShowCardWrapper(true), 400) // reuse delayed mount
-          }}
+          onRestart={handleRestart}
         />
       )}
     </div>

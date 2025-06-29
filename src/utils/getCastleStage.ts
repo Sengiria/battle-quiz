@@ -1,4 +1,4 @@
-export function getCastleStage(correctAnswers: number, totalQuestions: number, maxStage: number) {
-  const ratio = correctAnswers / totalQuestions
-  return Math.min(Math.floor(ratio * (maxStage + 1)), maxStage)
+export const getCastleStage = (correctAnswers: number, total: number, maxStage: number) => {
+  const ratio = correctAnswers / total
+  return Math.min(maxStage, Math.floor(ratio * (maxStage + 1)))
 }

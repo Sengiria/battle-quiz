@@ -1,13 +1,8 @@
 import React from 'react'
 import { DIFFICULTY_SETTINGS, type Difficulty } from '../../constants/difficulties'
+import type { DifficultySelectorProps } from './types'
 
-type Props = {
-  selected: Difficulty | null
-  onSelect: (difficulty: Difficulty) => void
-  onContinue: () => void
-}
-
-const DifficultySelector: React.FC<Props> = ({ selected, onSelect, onContinue }) => {
+const DifficultySelector: React.FC<DifficultySelectorProps> = ({ selected, onSelect, onContinue }) => {
   const difficulties: Difficulty[] = ['Easy', 'Medium', 'Hard', 'Hardcore']
 
   return (

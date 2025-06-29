@@ -1,5 +1,5 @@
 import './App.css'
-import Game from './Game';
+import Game from './components/Game/Game';
 
 function App() {
   return (
@@ -8,6 +8,5 @@ function App() {
     </div>
   );
 }
-
 
 export default App
