@@ -1,13 +1,22 @@
+import { useMemo } from 'react';
 import type { QuestionsContentProps } from './types'
 
 const QuestionsContent = ({ question, answers, onSelect, feedback, correctAnswer }: QuestionsContentProps) => {
+    const shuffledAnswers = useMemo(() => {
+    const shuffled = [...answers]
+    for (let i = shuffled.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1))
+      ;[shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]]
+    }
+    return shuffled
+  }, [question, answers])
   return (
     <>
       <h2 className="text-lg sm:text-xl text-shadow-lg text-[#795649] font-bold text-center drop-shadow p-2 w-full min-h-20 mt-4 break-words">
         {question}
       </h2>
       <div className="w-full flex flex-col items-center gap-3 p-6">
-        {answers.map((answer, index) => {
+        {shuffledAnswers.map((answer, index) => {
           const isSelected = feedback?.selected === answer
           const isCorrectAnswer = correctAnswer === answer
           const isWrong = isSelected && !feedback?.correct
